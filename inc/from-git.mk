@@ -7,7 +7,7 @@ latest-version: git-clone
 	cd $(gitdir) && rpmspec -q --srpm --qf '%{version}\n' $(SPEC)
 
 latest-release: git-clone
-	cd $(gitdir) && rpmspec -q --srpm --qf '%{version}-%{release}\n' $(SPEC)
+	cd $(gitdir) && rpmspec -q --srpm --qf '%|epoch?{%{epoch}:}:{}|%{version}-%{release}\n' $(SPEC)
 
 spec: git-clone
 	mkdir -p $(outdir)
