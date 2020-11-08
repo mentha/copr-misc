@@ -23,7 +23,7 @@ latest-release: pkginstall
 spec: pkginstall
 	cd $(pkgdir) && $(MAKE) spec outdir=$(outdir)
 
-srpm: spec
+srpm:
 	cd $(pkgdir) && $(MAKE) srpm outdir=$(outdir)
 
 ifeq ($(shell id -u),0)
