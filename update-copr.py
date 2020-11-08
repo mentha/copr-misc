@@ -34,7 +34,16 @@ repo = sys.argv[1]
 gitrepo = sys.argv[2]
 dist = outputof(['rpm', '--eval', '%dist']).strip()[1:]
 
-print('loading copr')
+print('checking copr build state')
+
+state = set([x.split()[2] for x in outputof(['copr-cli', 'list-builds', repo]).splitlines()] + ['succeeded', 'failed'])
+state.remove('succeeded')
+state.remove('failed')
+if len(state) != 0:
+	print('there are currently packages in state {}'.format(state))
+	exit(1)
+
+print('loading copr packages')
 repopkgs = json.loads(outputof(['copr-cli', 'list-packages', '--with-latest-succeeded-build', repo]))
 managed_pkgs = os.listdir('pkgs')
 updates = []
@@ -80,8 +89,6 @@ for p in updates:
 			ignore.add(p)
 for p in ignore:
 	updates.remove(p)
-
-print(updates)
 
 repodict = {}
 for p in repopkgs:
