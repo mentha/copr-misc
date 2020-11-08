@@ -12,8 +12,9 @@ latest-release: git-clone
 spec: git-clone
 	mkdir -p $(outdir)
 	cp -r $(gitdir)/* $(outdir)/
-	cd $(outdir) && spectool --get-files --all $(SPEC)
-	[ -e $(outdir)/sources ] && cd $(outdir) && $(tooldir)/verify_sources.py sources
+	cd $(outdir) && [ '$(SPEC)' != '$(pkg).spec' ] && mv -f $(SPEC) $(pkg).spec || true
+	cd $(outdir) && spectool --get-files --all $(pkg).spec
+	cd $(outdir) && [ -e sources ] && $(tooldir)/verify_sources.py sources || false
 
 git-clone:
 	if [ -d $(gitdir)/.git ]; then \
@@ -26,3 +27,5 @@ git-clone:
 			--recursive --depth=1 --branch=$(BRANCH) --single-branch \
 			$(GIT_REPO) $(gitdir); \
 	fi
+
+include srpm-from-spec.mk

@@ -1,7 +1,14 @@
-FEDORA_RELEASE ?= 33
+include default-vars.mk
 
-GIT_REPO = https://src.fedoraproject.org/rpms/$(pkg).git
-BRANCH   = f$(FEDORA_RELEASE)
-SPEC     = $(pkg).spec
+latest-version:
+	$(tooldir)/fedora-koji-latest.py version $(pkg)
 
-include from-git.mk
+srpm:
+	mkdir -p $(outdir)
+	cd $(outdir) && $(tooldir)/fedora-koji-latest.py download $(pkg)
+
+spec:
+	mkdir -p $(outdir)
+	cd $(outdir) && $(tooldir)/fedora-koji-latest.py unpack $(pkg)
+
+include latest-release-from-spec.mk

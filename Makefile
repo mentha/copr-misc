@@ -24,14 +24,7 @@ spec: pkginstall
 	cd $(pkgdir) && $(MAKE) spec outdir=$(outdir)
 
 srpm: spec
-	rpmbuild \
-		--define '_sourcedir $(outdir)' \
-		--define '_specdir $(outdir)' \
-		--define '_builddir $(outdir)' \
-		--define '_srcrpmdir $(outdir)' \
-		--define '_rpmdir $(outdir)' \
-		--nodeps \
-		-bs $(outdir)/$(pkg).spec
+	cd $(pkgdir) && $(MAKE) srpm outdir=$(outdir)
 
 ifeq ($(shell id -u),0)
 pkginstall:
