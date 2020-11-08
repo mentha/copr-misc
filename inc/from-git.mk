@@ -12,7 +12,7 @@ latest-release: git-clone
 spec: git-clone
 	mkdir -p $(outdir)
 	cp -r $(gitdir)/* $(outdir)/
-	cd $(outdir) && spectool -g -A $(SPEC)
+	cd $(outdir) && spectool --get-files --all $(SPEC)
 	[ -e $(outdir)/sources ] && cd $(outdir) && $(tooldir)/verify_sources.py sources
 
 git-clone:
