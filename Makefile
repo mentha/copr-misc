@@ -1,7 +1,7 @@
 outdir ?= ./output
 
 override outdir := $(abspath $(outdir))
-pkg       := $(patsubst %.spec,%,$(basename $(spec)))
+pkg       := $(basename $(notdir $(spec)))
 pkgdir    := ${CURDIR}/pkgs/$(pkg)
 incdir    := $(abspath ./inc)
 MAKEFLAGS += -I $(incdir)
