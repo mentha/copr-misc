@@ -57,13 +57,13 @@ for p in repopkgs:
 	buildlabel = p['latest_succeeded_build']['source_package']['version']
 	buildver = verparse(buildlabel, dist)
 	latestlabel = None
-	with tempfile.TemporaryDirectory(prefix='copr-update-') as tmpdir:
-		latestlabel = outputof([
-			'make',
-			'latest-release',
-			'spec={}.spec'.format(p['name']),
-			'outdir=' + tmpdir
-			], stderr=sp.DEVNULL).splitlines()[-1]
+	outdir = 'pkgs/{}/output'.format(p['name'])
+	latestlabel = outputof([
+		'make',
+		'latest-release',
+		'spec={}.spec'.format(p['name']),
+		'outdir=' + outdir
+		], stderr=sp.DEVNULL).splitlines()[-1]
 	latestver = verparse(latestlabel, dist)
 	if rpm.labelCompare(buildver, latestver) < 0:
 		updates.append(p['name'])

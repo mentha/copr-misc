@@ -5,7 +5,7 @@ latest-version:
 
 spec:
 	mkdir -p $(outdir)
-	cp * $(outdir)/
+	cp -r $(SRCS) $(outdir)/
 	sed -i 's#^Version:.*$$#Version: $(shell $(tooldir)/github-latest-release.py $(REPO))#' $(outdir)/$(pkg).spec
 	cd $(outdir) && spectool --get-files --all $(pkg).spec
 
