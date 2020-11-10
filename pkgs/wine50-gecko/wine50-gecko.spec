@@ -2,7 +2,6 @@ Name:      wine50-gecko
 Version:   2.47.1
 Release:   1%{?dist}
 Summary:   Wine's own version of Internet Explorer
-BuildArch: x86_64
 
 License: MPLv2
 URL:     https://www.winehq.org/

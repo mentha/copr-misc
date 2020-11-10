@@ -2,7 +2,6 @@ Name:      wine50-mono
 Version:   4.9.4
 Release:   1%{?dist}
 Summary:   an open-source and cross-platform implementation of the .NET Framework
-BuildArch: x86_64
 
 License: LGPLv2
 URL:     https://github.com/madewokherd/wine-mono
