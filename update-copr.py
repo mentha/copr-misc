@@ -25,7 +25,7 @@ def outputof(args, **kargs):
 	ka.update(kargs)
 	return sp.run(args, **ka).stdout
 
-re_ver = re.compile(r'^(?:(\d+):)?(.*)-(\d+)\.((?:el|fc)[.\d]+)$')
+re_ver = re.compile(r'^(?:(-?\d+):)?(.*)-(\d+)\.((?:el|fc)[.\d]+)$')
 def verparse(t, dist=None):
 	m = re_ver.match(t)
 	epoch = m[1]
@@ -61,7 +61,9 @@ for p in repopkgs:
 		print('package {} is not managed'.format(p['name']))
 		continue
 	newpkgs.remove(p['name'])
-	buildlabel = p['latest_succeeded_build']['source_package']['version']
+	buildlabel = '-1:0-1.el8'
+	if p['latest_succeeded_build']:
+		buildlabel = p['latest_succeeded_build']['source_package']['version']
 	buildver = verparse(buildlabel, dist)
 	latestlabel = None
 	outdir = 'pkgs/{}/output'.format(p['name'])
