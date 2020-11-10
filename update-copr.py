@@ -1,12 +1,19 @@
 #!/usr/bin/env python3
 
+import builtins
 import json
 import os
-import tempfile
 import re
 import rpm
 import subprocess as sp
 import sys
+import tempfile
+
+def print(*args, **kargs):
+	if 'file' not in kargs:
+		kargs['file'] = sys.stdout
+	builtins.print(*args, **kargs)
+	kargs['file'].flush()
 
 def outputof(args, **kargs):
 	ka = {
