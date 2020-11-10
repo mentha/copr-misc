@@ -61,7 +61,7 @@ for p in repopkgs:
 		print('package {} is not managed'.format(p['name']))
 		continue
 	newpkgs.remove(p['name'])
-	buildlabel = '-1:0-1.el8'
+	buildlabel = '-1.0.0-1.el8'
 	if p['latest_succeeded_build']:
 		buildlabel = p['latest_succeeded_build']['source_package']['version']
 	buildver = verparse(buildlabel, dist)
